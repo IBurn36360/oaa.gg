@@ -1,8 +1,8 @@
 ---
 ---
 
-@import "../_includes/_flexMixins";
-@import "../_includes/_mixins";
+@import "flexMixins";
+@import "mixins";
 
 // Animations
 @include generateKeyframes(-nav-mmr-rotate-unranked) {
