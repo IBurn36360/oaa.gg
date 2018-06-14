@@ -6,5 +6,4 @@ google_analytics:
 theme: jekyll-theme-minimal
 
 sass:
-  sass_dir: _sass
-  style: compressed
+  style: :compressed
