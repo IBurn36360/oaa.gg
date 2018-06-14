@@ -1,0 +1,176 @@
+@import "_flexMixins";
+@import "_mixins";
+
+// Animations
+@include generateKeyframes(-nav-mmr-rotate-unranked) {
+  0%, 20%, 80%, 100% {
+    opacity: 1;
+
+    @include transform(none);
+  }
+  30%, 70% {
+    opacity: 0;
+
+    @include transform(rotateX(180deg));
+  }
+}
+
+@include generateKeyframes(-nav-mmr-rotate-ranked) {
+  0%, 20%, 80%, 100% {
+    opacity: 0;
+
+    @include transform(rotateX(180deg));
+  }
+  30%, 70% {
+    opacity: 1;
+
+    @include transform(none);
+  }
+}
+
+// Actual CSS
+.steamAuth {
+  position:       relative;
+  border:         2px solid rgba(82, 82, 82, .7);
+  color:          rgba(82, 82, 82, .7);
+  display:        inline-block;
+  vertical-align: middle;
+
+  &:not(.loading),
+  &:not(.loaded) {
+    .steamLoader {
+      opacity:        0;
+      pointer-events: none;
+    }
+  }
+
+  &.loading {
+    .steamAuthLink,
+    .steamProfile {
+      opacity:        0;
+      pointer-events: none;
+    }
+  }
+
+  &.loaded {
+    .steamAuthLink {
+      opacity:        0;
+      pointer-events: none;
+    }
+  }
+
+  &.authenticated {
+    .steamLoader,
+    .steamAuthLink {
+      opacity:        0;
+      pointer-events: none;
+      position:       absolute; // This allows the authenticated profile to stretch the box, as it'll become static
+    }
+
+    .steamProfile {
+      pointer-events: all;
+      position:       static;
+      padding:        0 4px;
+    }
+  }
+
+  & > * {
+    @extend %transitionable;
+  }
+
+  .OAADownloadLink {
+    text-align:  center;
+    line-height: 1.4em;
+    padding:     2px;
+    height:      100%;
+
+    @extend %flexBox;
+
+    @include justify-content(center);
+    @include align-items(center);
+  }
+
+  .steamLoader {
+    position: absolute;
+    width:    100%;
+    height:   100%;
+
+    @include justify-content(center);
+    @include align-items(center);
+  }
+
+  .steamProfile {
+    position:       absolute;
+    top:            0;
+    left:           0;
+    right:          0;
+    bottom:         0;
+    pointer-events: none;
+
+    @include flex-direction(column);
+
+    .SteamUserName {
+      line-height: 1em;
+      text-align:  center;
+      font-weight: bold;
+      font-size:   .8rem;
+      padding:     4px 2px;
+    }
+
+    .OAAMMRValues {
+      text-align: center;
+      margin-top: auto;
+      position:   relative;
+
+      @include justify-content(center);
+      @include align-items(center);
+
+      & > * {
+        @include backface-visibility(hidden);
+      }
+    }
+
+    .OAARankedMMR {
+      position: absolute;
+      top:      0;
+      right:    0;
+      left:     0;
+      bottom:   0;
+      padding:  1px 2px;
+      display:  none;
+
+      &::before {
+        content: 'Ranked:';
+      }
+
+      .OAAUnrankedMMR {
+        padding: 1px 2px;
+        &::before {
+          content: 'Unranked:';
+        }
+      }
+    }
+  }
+  .steamAuthLink {
+    background: transparent;
+    border:     0;
+    cursor:     pointer;
+    padding:    7px 11px;
+    position:   relative;
+    z-index:    10;
+
+    @extend %flexBox;
+
+    @include align-items(center);
+
+    &:hover {
+      background: rgba(0, 0, 0, 0.2);
+    }
+
+    svg {
+      width:        2em;
+      height:       2em;
+      margin-right: .4em;
+    }
+  }
+}
